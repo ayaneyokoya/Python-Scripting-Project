@@ -33,18 +33,30 @@ def create_dir(path):
     if not os.path.exisst(path):
         os.mkdir(path)
 
+# recursive copy method
+def copy_and_overwrite(source, destination):
+    if os.path.exists(destination):
+        shutil.rmtree(destination)
+    shutil.copytree(source, destination)
+
 def main(source, target):
     cwd = os.getcwd()
     # will join the path based on operating system
     source_path = os.path.join(cwd, source) 
     target_path = os.path.join(cwd, target) 
     
+    # finds game paths (directories) from source directory
     game_paths = find_all_game_paths(source_path)
-    
     # will give just the directory name but removes "game"
-    new_game_dirs = get_name_from_paths(game_paths, "game")
+    new_game_dirs = get_name_from_paths(game_paths, "_game")
     
     create_dir(target_path)
+    
+    # zip takes matching elements from two arrays and combine them into a tuple
+    for src, dest in zip(game_paths, new_game_dirs):
+        dest_path = os.path.join(target_path, dest)
+        copy_and_overwrite(src, dest_path)
+        
 
 # checks that file was ran directly 
 # won't execute anything if a function or class were imported from this file
