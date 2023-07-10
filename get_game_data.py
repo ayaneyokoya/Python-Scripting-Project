@@ -39,6 +39,15 @@ def copy_and_overwrite(source, destination):
         shutil.rmtree(destination)
     shutil.copytree(source, destination)
 
+def make_json_metadata_file(path, game_dirs):
+    data = {
+        "gameNames": game_dirs,
+        "numberOfGames": len(game_dirs)
+    }
+    # using "with" will automatically close the file
+    with open(path, "w") as f:
+        json.dump(data, f)
+
 def main(source, target):
     cwd = os.getcwd()
     # will join the path based on operating system
