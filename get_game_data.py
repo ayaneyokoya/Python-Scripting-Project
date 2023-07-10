@@ -4,6 +4,22 @@ import shutil # will allow copying & overriding operations
 from subprocess import PIPE, run # will allow running almost any terminal command
 import sys # access to command line arguments  
 
+GAME_DIR_PATTERN = "game"
+
+def find_all_game_paths(source):
+    game_paths = []
+    
+    # will walk recursively through source directory
+    for root, dirs, files in os.walk(source):
+        for directory in dirs:
+            if GAME_DIR_PATTERN in directory.lower():
+                path = os.path.join(source, directory)
+                game_paths.append(path)
+        
+        break
+    
+    return game_paths
+
 def main(source, target):
     cwd = os.getcwd()
     # will join the path based on operating system
