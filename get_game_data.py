@@ -27,10 +27,10 @@ def get_name_from_paths(paths, to_strip):
         new_dir_name = dir_name.replace(to_strip, '')
         new_names.append(new_dir_name)
     
-    return new_dir_name
+    return new_names
 
 def create_dir(path):
-    if not os.path.exisst(path):
+    if not os.path.exists(path):
         os.mkdir(path)
 
 # recursive copy method
